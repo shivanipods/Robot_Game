@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>Robot Game</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-03-28 20:47:31 IST"/>
+<meta name="author" content="Shivani Poddar (201156152)"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">Robot Game</h1>
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Code Organization </a>
+<ul>
+<li><a href="#sec-1-1">1.1 Modules </a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 Class Decomposition </a>
+<ul>
+<li><a href="#sec-2-1">2.1 Class Methods </a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Advantages </a>
+<ul>
+<li><a href="#sec-3-1">3.1 Helpful Design </a></li>
+<li><a href="#sec-3-2">3.2 Flexible Design </a></li>
+<li><a href="#sec-3-3">3.3 Miscellaneous </a>
+<ul>
+<li><a href="#sec-3-3-1">3.3.1 Control Flow </a></li>
+</ul>
+</li>
+<li><a href="#sec-3-4">3.4 Extra features </a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Screen Shots </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Code Organization </h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Modules </h3>
+<div class="outline-text-3" id="text-1-1">
+
+<ul>
+<li>Robot
+     Responsible for moving and drawing the robot. Also, it is responsible for collision detection
+</li>
+<li>Board
+     Responsible for drawing / clearing the board
+</li>
+<li>Bomb
+     Responsible for storing bomb coordinates and drawing it on the window
+</li>
+<li>Defuse Code
+     Responsible for storing the coordinates of a defuse code and drawing it on the window
+</li>
+<li>Defuse Count
+     Responsible for managing the number of defuse codes remaining on the screen. It is also responsible for reinitializing counts across levels
+</li>
+<li>Score
+     Responsible for storing and displaying the current score of the player
+</li>
+<li>Game
+     It is responsible for the entire game logic. It creates other objects and starts the loop for handling key strokes, calls corresponding
+     update and draw functions, and finally exit the game.
+</li>
+</ul>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Class Decomposition </h2>
+<div class="outline-text-2" id="text-2">
+
+<ul>
+<li>There are 8 classes in all. One class is there for each of the modules described above.
+</li>
+<li>GameOver class extends Exception and is responsible for propagating this information from Robot / Game module to the GameLogic segment.
+</li>
+</ul>
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Class Methods </h3>
+<div class="outline-text-3" id="text-2-1">
+
+<ul>
+<li>Robot
+<ul>
+<li>move(self, x, y)
+       Moves the robot x distance in X direction and y distance in Y direction
+</li>
+<li>checkCollisioin(self, coordinates)
+       Checks if the robot is colliding with the given coordinate
+</li>
+<li>draw(self, window)
+       Draws the robot in the window provided
+</li>
+</ul>
+
+</li>
+<li>Board
+<ul>
+<li>draw(self)
+       Refreshes the board, forcing items to be drawn
+</li>
+<li>clear(self)
+       Clears all contents of the board except for the border
+</li>
+</ul>
+
+</li>
+<li>Bomb
+<ul>
+<li>draw(self)
+       Draws the bomb in the window provied at (x, y) location at which the bomb was created
+</li>
+</ul>
+
+</li>
+<li>DefuseCode
+<ul>
+<li>draw(self)
+       Draw the defuse code in the window provided at (x, y) location at which the defuse code was created
+</li>
+</ul>
+
+</li>
+<li>DefuseCount
+<ul>
+<li>__sub__(self, value)
+       Reduces the value of the defuse count by value
+</li>
+<li>reset(self)
+       Resets the defuse count for the next level
+</li>
+<li>draw(self, window)
+       Draws the current defuse count at the top of the given window
+</li>
+</ul>
+
+</li>
+<li>Score
+<ul>
+<li>__add__(self, value)
+       Adds value to the current score
+</li>
+<li>draw(self, window)
+       Draws the current score at the top of the given window
+</li>
+</ul>
+
+</li>
+<li>Game
+<ul>
+<li>loop
+       Creates game objects and starts the loop. It runs while update returns true. On returning false, it exits
+</li>
+<li>initLevel
+       Initializes all objects the next level
+</li>
+<li>update
+       Listens for key and updates all object
+</li>
+</ul>
+
+</li>
+<li>GameOver
+<ul>
+<li>No methods. Only inherits Exception class to make it an Exception Type
+</li>
+</ul>
+
+</li>
+</ul>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Advantages </h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Helpful Design </h3>
+<div class="outline-text-3" id="text-3-1">
+
+<ul>
+<li>Modular code organizes the objects in a way that each object handles it's own responsiblity. We can easily design
+     each component independently and making it the way it should behave, then all that is left is integration of various modules.
+</li>
+<li>It also helps in debugging as pin-pointing errors in particular modules. Then the particular module needs to be debugged
+     and not all the code.
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Flexible Design </h3>
+<div class="outline-text-3" id="text-3-2">
+
+<ul>
+<li>The design is flexible enough to reuse for a different GUI / game with a slightly different logic. On changing the GUI, all that
+     needs to change is the draw function of each of the classes / modules. On changing the logic, the update function of the game is
+     the only thing that will need to change. It is agnostic to minor changes in GUI / logic.
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Miscellaneous </h3>
+<div class="outline-text-3" id="text-3-3">
+
+
+</div>
+
+<div id="outline-container-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Control Flow </h4>
+<div class="outline-text-4" id="text-3-3-1">
+
+<ul>
+<li>The main creates an object of the Game class, and calls it's loop. When the loop begins, it creates various objects required
+      for the game. And Keeps calling update function while the game is running. The update function, listens for various key strokes
+      and calls corresponding updates on the game objects. It returs False when the game is over.
+</li>
+<li>Logic resides in the update function of the Game class.
+</li>
+</ul>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Extra features </h3>
+<div class="outline-text-3" id="text-3-4">
+
+<ul>
+<li>The game has various level. The number of defuse codes increase as the level increases.
+</li>
+<li>For each level, game resets the position of the robot to the top.
+</li>
+<li>For each level, the game initially waits for the user to press the key and the robot does not start moving on its own
+</li>
+</ul>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Screen Shots </h2>
+<div class="outline-text-2" id="text-4">
+
+<ul>
+<li><img src="screenshot1.png"  alt="screenshot1.png" />
+</li>
+<li><img src="screenshot2.png"  alt="screenshot2.png" />
+</li>
+</ul>
+
+</div>
+</div>
+<div id="postamble">
+<p class="date">Date: 2012-03-28 20:47:31 IST</p>
+<p class="author">Author: Shivani Poddar (201156152)</p>
+<p class="creator">Org version 7.6 with Emacs version 23</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+</div>
+</div>
+</body>
+</html>

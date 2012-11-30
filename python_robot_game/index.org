@@ -1,0 +1,86 @@
+#+TITLE: Robot Game
+#+AUTHOR: Shivani Poddar (201156152)
+
+* Code Organization
+** Modules
+   - Robot
+     Responsible for moving and drawing the robot. Also, it is responsible for collision detection
+   - Board
+     Responsible for drawing / clearing the board
+   - Bomb
+     Responsible for storing bomb coordinates and drawing it on the window
+   - Defuse Code
+     Responsible for storing the coordinates of a defuse code and drawing it on the window
+   - Defuse Count
+     Responsible for managing the number of defuse codes remaining on the screen. It is also responsible for reinitializing counts across levels
+   - Score
+     Responsible for storing and displaying the current score of the player
+   - Game
+     It is responsible for the entire game logic. It creates other objects and starts the loop for handling key strokes, calls corresponding
+     update and draw functions, and finally exit the game.
+* Class Decomposition
+   - There are 8 classes in all. One class is there for each of the modules described above.
+   - GameOver class extends Exception and is responsible for propagating this information from Robot / Game module to the GameLogic segment.
+** Class Methods
+   - Robot
+     - move(self, x, y)
+       Moves the robot x distance in X direction and y distance in Y direction
+     - checkCollisioin(self, coordinates)
+       Checks if the robot is colliding with the given coordinate
+     - draw(self, window)
+       Draws the robot in the window provided
+   - Board
+     - draw(self)
+       Refreshes the board, forcing items to be drawn
+     - clear(self)
+       Clears all contents of the board except for the border
+   - Bomb
+     - draw(self)
+       Draws the bomb in the window provied at (x, y) location at which the bomb was created
+   - DefuseCode
+     - draw(self)
+       Draw the defuse code in the window provided at (x, y) location at which the defuse code was created
+   - DefuseCount
+     - \_\_sub\_\_(self, value)
+       Reduces the value of the defuse count by value
+     - reset(self)
+       Resets the defuse count for the next level
+     - draw(self, window)
+       Draws the current defuse count at the top of the given window
+   - Score
+     - \_\_add\_\_(self, value)
+       Adds value to the current score
+     - draw(self, window)
+       Draws the current score at the top of the given window
+   - Game
+     - loop
+       Creates game objects and starts the loop. It runs while update returns true. On returning false, it exits
+     - initLevel
+       Initializes all objects the next level
+     - update
+       Listens for key and updates all object
+   - GameOver
+     - No methods. Only inherits Exception class to make it an Exception Type
+* Advantages
+** Helpful Design
+   - Modular code organizes the objects in a way that each object handles it's own responsiblity. We can easily design
+     each component independently and making it the way it should behave, then all that is left is integration of various modules.
+   - It also helps in debugging as pin-pointing errors in particular modules. Then the particular module needs to be debugged
+     and not all the code.
+** Flexible Design
+   - The design is flexible enough to reuse for a different GUI / game with a slightly different logic. On changing the GUI, all that
+     needs to change is the draw function of each of the classes / modules. On changing the logic, the update function of the game is
+     the only thing that will need to change. It is agnostic to minor changes in GUI / logic.
+** Miscellaneous
+*** Control Flow
+    - The main creates an object of the Game class, and calls it's loop. When the loop begins, it creates various objects required
+      for the game. And Keeps calling update function while the game is running. The update function, listens for various key strokes
+      and calls corresponding updates on the game objects. It returs False when the game is over.
+    - Logic resides in the update function of the Game class.
+** Extra features
+   - The game has various level. The number of defuse codes increase as the level increases.
+   - For each level, game resets the position of the robot to the top.
+   - For each level, the game initially waits for the user to press the key and the robot does not start moving on its own
+* Screen Shots
+  - [[file:screenshot1.png]]
+  - [[file:screenshot2.png]]
